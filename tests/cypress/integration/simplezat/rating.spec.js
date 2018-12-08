@@ -4,10 +4,10 @@ context('Rating', () => {
   })
 
   it('should have 3 rating', () =>{
-    cy.contains('How do you do?')
-    cy.get('img').should('have.attr', 'alt', 'Positive')
-    cy.get('img').should('have.attr', 'alt', 'Neutral')
-    cy.get('img').should('have.attr', 'alt', 'Negative')
+    cy.contains('How do we do?')
+    cy.get('[href="/ratings/positive"] > img').should('have.attr', 'alt', 'Positive')
+    cy.get('[href="/ratings/neutral"] > img').should('have.attr', 'alt', 'Neutral')
+    cy.get('[href="/ratings/negative"] > img').should('have.attr', 'alt', 'Negative')
 
     cy.get('img[alt="Positive"]').click()
     cy.wait(1000)

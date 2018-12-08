@@ -1,7 +1,13 @@
+from django.shortcuts import render
 from django.http import HttpResponse
-from django.views import View
+from django.views.generic import TemplateView
 
 
-class RatingView(View):
+class RatingView(TemplateView):
+    template = 'ratings.html'
+
     def get(self, request):
-        return HttpResponse()
+        return render(
+            request,
+            self.template
+        )
