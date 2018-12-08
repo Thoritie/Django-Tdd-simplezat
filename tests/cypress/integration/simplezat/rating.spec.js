@@ -1,6 +1,6 @@
 context('Rating', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8000')
+    cy.visit('http://localhost:8000/ratings')
   })
 
   it('should have 3 rating', () =>{
