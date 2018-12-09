@@ -1,6 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
+from django.urls import reverse
 
 
 class RatingView(TemplateView):
@@ -12,6 +12,7 @@ class RatingView(TemplateView):
             self.template
         )
 
+
 class CommentView(TemplateView):
     template = 'comments.html'
 
@@ -22,4 +23,19 @@ class CommentView(TemplateView):
             {
                 'rating': rating
             }
+        )
+
+    def post(self, request, rating):
+        return redirect(
+            reverse('thanks')
+        )
+
+
+class ThankView(TemplateView):
+    template = 'thanks.html'
+
+    def get(self, request):
+        return render(
+            request,
+            self.template
         )

@@ -5,9 +5,9 @@ context('Rating', () => {
 
   it('should have 3 rating', () =>{
     cy.contains('How do we do?')
-    cy.get('[href="positive/"] > img').should('have.attr', 'alt', 'Positive')
-    cy.get('[href="neutral/"] > img').should('have.attr', 'alt', 'Neutral')
-    cy.get('[href="negative/"] > img').should('have.attr', 'alt', 'Negative')
+    cy.get('[href="/ratings/positive/"] > img').should('have.attr', 'alt', 'Positive')
+    cy.get('[href="/ratings/neutral/"] > img').should('have.attr', 'alt', 'Neutral')
+    cy.get('[href="/ratings/negative/"] > img').should('have.attr', 'alt', 'Negative')
 
     cy.get('img[alt="Positive"]').click()
     cy.wait(1000)
@@ -17,6 +17,6 @@ context('Rating', () => {
     cy.get('button').click()
     cy.wait(1000)
 
-    cy.contains('Thank you!')
+    cy.contains('Thank You!')
   })
 })

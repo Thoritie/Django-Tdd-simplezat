@@ -12,19 +12,21 @@ class RatingViewTest(TestCase):
         expected = '<h1>How do we do?</h1>'
         self.assertContains(response, expected, status_code=200)
 
-
     def test_rating_view_should_show_three_ratings(self):
         response = self.client.get(self.url)
 
-        expected = '<a href="positive/">' \
+        positive_url = reverse('comments', kwargs={'rating': 'positive'})
+        expected = f'<a href="{positive_url}">' \
             '<img src="/static/images/positive.png" alt="Positive"></a>'
         self.assertContains(response, expected, status_code=200)
 
-        expected = '<a href="neutral/">' \
+        neutral_url = reverse('comments', kwargs={'rating': 'neutral'})
+        expected = f'<a href="{neutral_url}">' \
             '<img src="/static/images/neutral.png" alt="Neutral"></a>'
         self.assertContains(response, expected, status_code=200)
 
-        expected = '<a href="negative/">' \
+        negative_url = reverse('comments', kwargs={'rating': 'negative'})
+        expected = f'<a href="{negative_url}">' \
             '<img src="/static/images/negative.png" alt="Negative"></a>'
 
         self.assertContains(response, expected, status_code=200)
@@ -54,9 +56,23 @@ class CommentViewTest(TestCase):
                 '<button type="submit">Submit</button></form>'
             self.assertContains(response, expected, status_code=200)
 
+    def test_comment_view_should_redirect_after_submit(self):
+        url = reverse(
+            'comments',
+            kwargs={
+                'rating': 'hello'
+            }
+        )
+        response = self.client.post(url)
+
+        thanks_url = reverse('thanks')
+        self.assertRedirects(response, thanks_url, status_code=302)
 
 
+class ThanksViewTest(TestCase):
+    def test_thanks_view_should_render_thank_you_text(self):
+        url = reverse('thanks')
+        response = self.client.get(url)
 
-
-
-
+        expected = '<h1>Thank You!</h1>'
+        self.assertContains(response, expected, status_code=200)
