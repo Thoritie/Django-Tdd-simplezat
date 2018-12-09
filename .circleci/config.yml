@@ -65,7 +65,7 @@ jobs:
             docker push roseth/simplezat:stable
       - add_ssh_keys:
           fingerprints:
-            - ""
+            - "38:6b:7d:25:ad:ba:05:49:52:88:75:60:5a:b6:e4:22"
       - run:
           name: Install Dependencies
           command: |
