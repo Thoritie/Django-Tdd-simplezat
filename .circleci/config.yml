@@ -63,7 +63,6 @@ jobs:
             docker build -t roseth/simplezat:stable -f Dockerfile.dev . 
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push roseth/simplezat:stable
-      - add_ssh_keys:
       - run:
           name: Install Dependencies
           command: |
