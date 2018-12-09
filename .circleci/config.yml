@@ -91,7 +91,7 @@ jobs:
           name: Deploy to prod 
           command: |
             cd deployment
-            ssh-keyscan -H 35.236.195.213 >> ~/.ssh/known_hosts
+            ssh-keyscan -H 35.246.38.77 >> ~/.ssh/known_hosts
             pipenv install
             pipenv run ansible-playbook -i hosts playbooks/prod.yml --extra-vars "project_root=~/Django-Tdd-simplezat"
 
