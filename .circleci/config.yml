@@ -56,6 +56,16 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - setup_remote_docker
+      - build:
+          name: Build Stable Images
+          command: |
+            docker build -t roseth/simplezat:stable -f Dockerfile.dev . 
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push roseth/simplezat:stable
+      - add_ssh_keys:
+          fingerprints:
+            - ""
       - run:
           name: Install Dependencies
           command: |
