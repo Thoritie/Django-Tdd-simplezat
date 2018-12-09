@@ -33,7 +33,7 @@ jobs:
           name: Install Dependencies
           command: |
             pipenv install --dev
-            pipenv run --dev flake8
+            pipenv run flake8
 
   unit_tests:
     working_directory: ~/Django-Tdd-simplezat
