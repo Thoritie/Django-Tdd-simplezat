@@ -83,7 +83,7 @@ jobs:
       - run:
           name: Build Stable Images
           command: |
-            docker build -t roseth/simplezat:live -f Dockerfile.prod . 
+            docker build -t roseth/simplezat:live -f Dockerfile.production . 
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push roseth/simplezat:live
       - add_ssh_keys
