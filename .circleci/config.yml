@@ -21,7 +21,6 @@ jobs:
           name: Install Dependencies
           command: |
             pip3 install pipenv 
-            pipenv install --dev
     
   static_analysis:
     working_directory: ~/Django-Tdd-simplezat
@@ -33,6 +32,7 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
+            pipenv install --dev
             pipenv run --dev flake8
 
   unit_tests:
@@ -45,6 +45,7 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
+            pipenv install --dev
             cd simplezat
             pipenv run python manage.py test
 
