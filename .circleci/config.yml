@@ -72,6 +72,29 @@ jobs:
             pipenv install
             pipenv run ansible-playbook -i hosts playbooks/dev.yml --extra-vars "project_root=~/Django-Tdd-simplezat"
 
+  deploy_prod:
+    working_directory: ~/Django-Tdd-simplezat
+    docker:
+      - image: circleci/python:3.7.1
+    steps:
+      - attach_workspace:
+          at: .
+      - setup_remote_docker
+      - run:
+          name: Build Stable Images
+          command: |
+            docker build -t roseth/simplezat:live -f Dockerfile.prod . 
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push roseth/simplezat:live
+      - add_ssh_keys
+      - run:
+          name: Deploy to prod 
+          command: |
+            cd deployment
+            ssh-keyscan -H 35.236.195.213 >> ~/.ssh/known_hosts
+            pipenv install
+            pipenv run ansible-playbook -i hosts playbooks/prod.yml --extra-vars "project_root=~/Django-Tdd-simplezat"
+
 
 workflows:
   version: 2
@@ -90,3 +113,10 @@ workflows:
       - deploy:
           requires:
             - unit_tests
+      - waiting_for_approval:
+          type: approval
+          requires:
+            - deploy
+      - deploy_prod:
+          requires:
+            - waiting_for_approval
