@@ -57,7 +57,7 @@ jobs:
       - attach_workspace:
           at: .
       - setup_remote_docker
-      - build:
+      - run:
           name: Build Stable Images
           command: |
             docker build -t roseth/simplezat:stable -f Dockerfile.dev . 
