@@ -21,7 +21,7 @@ jobs:
           name: Install Dependencies
           command: |
             pip3 install pipenv 
-    
+
   static_analysis:
     working_directory: ~/Django-Tdd-simplezat
     docker:
