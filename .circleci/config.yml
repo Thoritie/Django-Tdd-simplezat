@@ -70,6 +70,7 @@ jobs:
           name: Install Dependencies
           command: |
             cd deployment
+            ssh-keyscan -H 35.236.195.213 >> ~/.ssh/known_hosts
             pipenv install ansible
             pipenv run ansible-playbook -i hosts playbooks/dev.yml --extra-vars "project_root=~/simplezat"
 
