@@ -13,4 +13,3 @@ class Rating(models.Model):
         blank=False,
         default='',
     )
-
