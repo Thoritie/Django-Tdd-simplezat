@@ -137,7 +137,7 @@ workflows:
       - waiting_for_approval:
           type: approval
           requires:
-            - deploy
+            - acceptance_test
       - deploy_prod:
           requires:
             - waiting_for_approval
