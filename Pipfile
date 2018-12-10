@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 django = "*"
 psycopg2 = "==2.7.1"
+uwsgi = "*"
 
 [dev-packages]
 "flake8" = "*"
