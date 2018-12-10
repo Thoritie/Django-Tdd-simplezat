@@ -87,7 +87,7 @@ jobs:
           command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker build -t roseth/simplezat:live -f Dockerfile.production . 
-            docker tag roseth/simplezat:stable roseth/simplezat:$CIRCLE_SHA1
+            docker tag roseth/simplezat:live  roseth/simplezat:$CIRCLE_SHA1
             docker push roseth/simplezat:live
             docker push roseth/simplezat:$CIRCLE_SHA1
       - add_ssh_keys
