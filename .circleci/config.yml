@@ -61,7 +61,7 @@ jobs:
           name: Build Stable Images
           command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker build -t roseth/simplezat:stable -f Dockerfile.dev . 
+            docker build -t roseth/simplezat:stable -f Dockerfile.production . 
             docker tag roseth/simplezat:stable roseth/simplezat:$CIRCLE_SHA1
             docker push roseth/simplezat:stable
             docker push roseth/simplezat:$CIRCLE_SHA1
