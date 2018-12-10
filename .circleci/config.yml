@@ -99,6 +99,20 @@ jobs:
             pipenv install
             pipenv run ansible-playbook -i hosts playbooks/prod.yml --extra-vars "project_root=~/Django-Tdd-simplezat"
 
+  acceptance_test:
+    working_directory: ~/Django-Tdd-simplezat
+    docker:
+      - image: circleci/node:chakracore-browsers-legacy
+    steps:
+      - attach_workspace:
+          at: .
+      - setup_remote_docker
+      - run:
+          name: Run Acceptance test
+          command: |
+            cd tests
+            pipenv install
+            CYPRESS_baseUrl=http://35.236.195.213:8000/ ./node_modules/.bin/cypress run --spec 'cypress/integration/simplezat/*'
 
 workflows:
   version: 2
@@ -117,6 +131,9 @@ workflows:
       - deploy:
           requires:
             - unit_tests
+      - acceptance_test:
+          requires:
+            - deploy
       - waiting_for_approval:
           type: approval
           requires:
