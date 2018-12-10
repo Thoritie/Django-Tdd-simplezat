@@ -51,9 +51,11 @@ class CommentViewTest(TestCase):
                 '<input type="hidden" name="csrfmiddlewaretoken"'
             self.assertContains(response, expected, status_code=200)
 
-            expected = '<textarea name="comment"></textarea>' \
-                f'<input type="hidden" name="rating" value="{each}">' \
-                '<button type="submit">Submit</button></form>'
+            expected = '<p><label for="id_comment">Comment:</label>' \
+                '<textarea name="comment" cols="40" rows="10" ' \
+                'required id="id_comment"></textarea><input ' \
+                'type="hidden" name="sentiment" ' \
+                f'value="{each}" id="id_sentiment"></p>'
             self.assertContains(response, expected, status_code=200)
 
     def test_comment_view_should_redirect_after_submit(self):
