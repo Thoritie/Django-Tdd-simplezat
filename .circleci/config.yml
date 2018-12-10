@@ -60,9 +60,11 @@ jobs:
       - run:
           name: Build Stable Images
           command: |
-            docker build -t roseth/simplezat:stable -f Dockerfile.dev . 
             docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker build -t roseth/simplezat:stable -f Dockerfile.dev . 
+            docker tag roseth/simplezat:stable roseth/simplezat:$CIRCLE_SHA1
             docker push roseth/simplezat:stable
+            docker push roseth/simplezat:$CIRCLE_SHA1
       - add_ssh_keys
       - run:
           name: Deploy to dev 
@@ -83,9 +85,11 @@ jobs:
       - run:
           name: Build Stable Images
           command: |
-            docker build -t roseth/simplezat:live -f Dockerfile.production . 
             docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker build -t roseth/simplezat:live -f Dockerfile.production . 
+            docker tag roseth/simplezat:stable roseth/simplezat:$CIRCLE_SHA1
             docker push roseth/simplezat:live
+            docker push roseth/simplezat:$CIRCLE_SHA1
       - add_ssh_keys
       - run:
           name: Deploy to prod 
