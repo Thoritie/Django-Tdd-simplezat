@@ -1,9 +1,11 @@
 from django.test import TestCase
 
+from ..admin import RatingAdmin
+
 
 class RatingAdminTest(TestCase):
     def test_admin_should_be_register_rating_model(self):
-        url = '/admin/ratings/rating'
+        url = '/admin/ratings/rating/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
 
