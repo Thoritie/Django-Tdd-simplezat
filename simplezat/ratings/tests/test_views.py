@@ -1,6 +1,8 @@
 from django.urls import reverse
 from django.test import TestCase
 
+from ..models import Rating
+
 
 class RatingViewTest(TestCase):
     def setUp(self):
@@ -69,6 +71,24 @@ class CommentViewTest(TestCase):
 
         thanks_url = reverse('thanks')
         self.assertRedirects(response, thanks_url, status_code=302)
+
+    def test_submit_comment_form_should_save_data(self):
+        data = {
+            'sentiment': 'positive',
+            'comments': 'You did great!',
+        }
+
+        url = reverse(
+            'comments',
+            kwargs={
+                'rating': 'positive'
+            }
+        )
+        self.client.post(url, data=data)
+
+        rating = Rating.objects.last()
+        self.assertEqual(rating.sentiment, 'positive')
+        self.assertEqual(rating.comment, 'You did great!')
 
 
 class ThanksViewTest(TestCase):
