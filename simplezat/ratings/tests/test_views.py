@@ -60,22 +60,10 @@ class CommentViewTest(TestCase):
                 f'value="{each}" id="id_sentiment"></p>'
             self.assertContains(response, expected, status_code=200)
 
-    def test_comment_view_should_redirect_after_submit(self):
-        url = reverse(
-            'comments',
-            kwargs={
-                'rating': 'hello'
-            }
-        )
-        response = self.client.post(url)
-
-        thanks_url = reverse('thanks')
-        self.assertRedirects(response, thanks_url, status_code=302)
-
-    def test_submit_comment_form_should_save_data(self):
+    def test_submit_comment_form_should_save_data_redirect_when_valid(self):
         data = {
             'sentiment': 'positive',
-            'comments': 'You did great!',
+            'comment': 'You did great!',
         }
 
         url = reverse(
@@ -84,11 +72,31 @@ class CommentViewTest(TestCase):
                 'rating': 'positive'
             }
         )
-        self.client.post(url, data=data)
+        response = self.client.post(url, data=data)
+
+        self.assertRedirects(response, reverse('thanks'))
 
         rating = Rating.objects.last()
         self.assertEqual(rating.sentiment, 'positive')
         self.assertEqual(rating.comment, 'You did great!')
+
+    def test_submit_comment_should_not_save_data_when_invalid_no_re(self):
+        data = {
+            'sentiment': 'positive',
+            'comment': '',
+        }
+        url = reverse(
+            'comments',
+            kwargs={
+                'rating': 'positive'
+            }
+        )
+        response = self.client.post(url, data=data)
+
+        self.assertEqual(response.status_code, 200)
+
+        rating = Rating.objects.last()
+        self.assertIsNone(rating)
 
 
 class ThanksViewTest(TestCase):
