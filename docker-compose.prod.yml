@@ -7,7 +7,7 @@ services:
             - "8000:80"
         volumes:
             - app-staticfiles:/app/static
-        depends-on:
+        depends_on:
             - app
     db:
         image: postgres:11.1-alpine
@@ -18,7 +18,7 @@ services:
         volumes:
             - app-staticfiles:/app/static
         command: sh -c "./entrypoint.dev.sh"
-        depends-on:
+        depends_on:
             - db
 
 volumes:
