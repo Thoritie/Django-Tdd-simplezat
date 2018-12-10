@@ -102,7 +102,7 @@ jobs:
   acceptance_test:
     working_directory: ~/Django-Tdd-simplezat
     docker:
-      - image: circleci/node:chakracore-browsers-legacy
+      - image: circleci/node:8.11.3-browsers
     steps:
       - attach_workspace:
           at: .
