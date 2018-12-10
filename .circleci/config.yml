@@ -62,6 +62,12 @@ jobs:
           name: Build Stable Images
           command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
+            
+            docker build -t roseth/simplezat-nginx:stable -f nginx/Dockerfile nginx/
+            docker tag roseth/simplezat-nginx:stable roseth/simplezat-nginx:$CIRCLE_SHA1
+            docker push roseth/simplezat-nginx:stable
+            docker push roseth/simplezat-nginx:$CIRCLE_SHA1
+
             docker build -t roseth/simplezat:stable -f Dockerfile.production . 
             docker tag roseth/simplezat:stable roseth/simplezat:$CIRCLE_SHA1
             docker push roseth/simplezat:stable
@@ -87,6 +93,11 @@ jobs:
           name: Build Stable Images
           command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+            docker pull roseth/simplezat-nginx:stable
+            docker tag roseth/simplezat-nginx:stable roseth/simplezat-nginx:live
+            docker push roseth/simplezat-nginx:live
+
             docker build -t roseth/simplezat:live -f Dockerfile.production . 
             docker tag roseth/simplezat:live  roseth/simplezat:$CIRCLE_SHA1
             docker push roseth/simplezat:live
